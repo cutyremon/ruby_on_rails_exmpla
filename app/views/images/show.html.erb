@@ -2,7 +2,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @image.user_id %>
+  <%= @image.user.email %>
 </p>
 
 <p>
@@ -12,9 +12,26 @@
 
 <p>
   <strong>File:</strong>
-  <%= @image.file %>
+  <%= image_tag @image.file %>
 </p>
-
+<h2>コメントフォーム</h2>
+<%= form_for(@image_comment) do |f| %>
+<div class= "field">
+<%= f.label :comment %><br>
+<%= f.text_field :comment %>
+<%= f.hidden_field :image_id, :value => @image.id %>
+</div>
+<div class="actions">
+<%= f.submit %>
+</div>
+<% end %>
+<h2>コメント一覧</h2>
+<ul>
+<% @image.image_comment.each do |image_comment|%>
+<li><%= image_comment.comment %>
+(<i><%= image_comment.image.user.email %></i>)</li>
+<% end %>
+</ul>
 <p>
   <strong>Created at:</strong>
   <%= @image.created_at %>
